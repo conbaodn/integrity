@@ -112,7 +112,7 @@ def md5(msg):
 	processed_msg = processMessage(msg)
 	# processed_msg contains the integer value of the hash
 	message_hash = MD_to_hex(processed_msg)
-	print("Message Hash: ", message_hash)
+	return message_hash
 
 
 

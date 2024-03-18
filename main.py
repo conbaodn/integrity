@@ -1,6 +1,7 @@
 from PyQt6 import QtWidgets,  uic
 from PyQt6.QtWidgets import *
 from data import *
+import md5
 import checksumdir
 import hashlib
 import sys
@@ -78,7 +79,7 @@ class Ui(QMainWindow):
     def hash_function(self,data):
         hash_text_sha1 = hashlib.sha1(data.encode("utf8")).hexdigest()
         hash_text_sha256 = hashlib.sha256(data.encode("utf8")).hexdigest()
-        hash_text_md5 = hashlib.md5(data.encode("utf8")).hexdigest()
+        hash_text_md5 = md5.md5(data)
 
         return hash_text_sha1, hash_text_sha256, hash_text_md5
 
@@ -133,8 +134,8 @@ class Ui(QMainWindow):
         if self.select_row != -1:
             self.filename_current_row = self.table_sql.item(self.select_row,0).text()
         
-    
-app = QtWidgets.QApplication(sys.argv) 
-window = Ui()
-window.show()
-app.exec()
+if __name__ == '__main__':  
+    app = QtWidgets.QApplication(sys.argv) 
+    window = Ui()
+    window.show()
+    app.exec()
