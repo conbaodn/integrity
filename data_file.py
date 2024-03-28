@@ -1,6 +1,6 @@
 import sqlite3
 
-class MyData():
+class HashData():
 	def __init__(self):
 		self.conn = sqlite3.connect('data.db')
 		self.cur = self.conn.cursor()
