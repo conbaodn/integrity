@@ -8,7 +8,7 @@ class CheckIntegrity(QMainWindow):
     def __init__(self):
         super(CheckIntegrity, self).__init__()
         uic.loadUi('check.ui', self)
-        self.data=data_file.HashData()
+        self.data = data_file.HashData()
         self.filename_current_row = None
         self.select_row = None
 

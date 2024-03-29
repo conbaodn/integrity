@@ -1,25 +1,50 @@
-from PyQt6 import QtWidgets,  uic
+from PyQt6 import uic
 from PyQt6.QtWidgets import *
-import sqlite3
-class Login(QMainWindow):
-	def __init__(self):
-		super(Login, self).__init__()
-		uic.loadUi('login.ui', self)
-	
-		self.conn = sqlite3.connect('login.db')
-		self.cur = self.conn.cursor()
-		
-		self.cur.execute("""CREATE TABLE if not exists "user" (
-			"User"	TEXT PRIMARY KEY ,
-			"Password"	TEXT)
-			""")
-	def set_data(self):
-		self.data_file = self.conn.execute("""select * from user""")
-			
-	def load_data(self,file_name,hash_code):
-		load_table="INSERT INTO user(User,Password) VALUES(?,?)ON CONFLICT(User) DO UPDATE SET Hash=?"
-		self.cur.execute(load_table,(file_name,hash_code,hash_code))
+import check
+import data_user
 
-	def delete_data(self,User):
-		delete_table = "DELETE FROM user WHERE User=?"
-		self.cur.execute(delete_table,(User,))
+class Login(QMainWindow):
+    def __init__(self):
+        super(Login, self).__init__()
+        uic.loadUi('login.ui', self)
+        self.check_ui= check.CheckIntegrity()
+        self.data = data_user.User()
+        self.btn_login.clicked.connect(self.login_account)
+        self.check_ui.btn_register.clicked.connect(self.register_form)
+    
+    def login_account(self):
+        user_name = self.line_user_name.text()
+        passwd = self.line_passwd.text()
+        check = self.data.check_login(user_name,passwd)
+        if(check == None):
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle("Warring!")
+            msgBox.setText("Incorrect User Name or Password")
+            msgBox.exec()
+        elif check[0] != 'admin':
+            self.close()
+            self.check_ui.show()
+            self.check_ui.btn_register.hide()
+            self.check_ui.tabWidget.removeTab(2)
+        else:
+            self.close()
+            self.check_ui.show()
+    
+    def register_form(self):
+        self.check_ui.hide()
+        uic.loadUi('register.ui', self)
+        self.show()
+        self.btn_register.clicked.connect(self.register_user)
+        
+    def register_user(self):
+        user_name = self.line_user_name.text()
+        passwd = self.line_passwd.text()
+        print(user_name +' '+ passwd)
+        if user_name and passwd != 0:
+            self.data.insert_data(user_name,passwd)
+        else:
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle("Warring!")
+            msgBox.setText("Please enter User Name and Password")
+            msgBox.exec()
+            

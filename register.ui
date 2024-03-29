@@ -16,9 +16,9 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0" colspan="2">
-     <widget class="QPushButton" name="btn_login">
+     <widget class="QPushButton" name="btn_register">
       <property name="text">
-       <string>Login</string>
+       <string>Register</string>
       </property>
      </widget>
     </item>
