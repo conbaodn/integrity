@@ -3,12 +3,15 @@ from PyQt6.QtWidgets import *
 import hashlib
 import data_file
 import md5
+import management
 
 class CheckIntegrity(QMainWindow):
     def __init__(self):
         super(CheckIntegrity, self).__init__()
         uic.loadUi('check.ui', self)
+        
         self.data = data_file.HashData()
+        self.management_user=management.ManagementUser()
         self.filename_current_row = None
         self.select_row = None
 
@@ -20,8 +23,10 @@ class CheckIntegrity(QMainWindow):
         self.btn_load.clicked.connect(self.process_load_data)
         self.btn_delete.clicked.connect(self.delete_data)
         self.btn_check_data.clicked.connect(self.check_by_data)
-        self.table_sql.itemSelectionChanged.connect(self.get_select_file)     
-        self.table_sql.setColumnCount(0)
+        self.btn_management.clicked.connect(self.management_form)
+
+        self.table_file_hash.itemSelectionChanged.connect(self.get_select_file)     
+        self.table_file_hash.setColumnCount(0)
 
 
     def process_hash(self):
@@ -92,19 +97,18 @@ class CheckIntegrity(QMainWindow):
 
 # Data
     def show_data(self):
-        self.table_sql.setRowCount(0)
-        self.table_sql.setColumnCount(2)  
-        self.data.set_data()      
+        self.table_file_hash.setRowCount(0)
+        self.table_file_hash.setColumnCount(2)  
+        self.data.show_data()      
         for row_num, row_data in enumerate(self.data.data):
-            self.table_sql.insertRow(row_num)
+            self.table_file_hash.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
-                self.table_sql.setItem(row_num,col_num,QtWidgets.QTableWidgetItem(str(col_data)))
+                self.table_file_hash.setItem(row_num,col_num,QtWidgets.QTableWidgetItem(str(col_data)))
 
     def process_load_data(self):
-        self.data.load_data(str(self.line_choose.text()),str(self.text_hash_sha1.toPlainText()+self.text_hash_sha2.toPlainText()+\
+        self.data.insert_data(str(self.line_choose.text()),str(self.text_hash_sha1.toPlainText()+self.text_hash_sha2.toPlainText()+\
              self.text_hash_md5.toPlainText()))
         self.show_data()
-        self.data.conn.commit()
 
     def delete_data(self):
         if(self.select_row is None):
@@ -112,20 +116,25 @@ class CheckIntegrity(QMainWindow):
         else :
             self.data.delete_data(self.filename_current_row)
             self.show_data()
-            self.data.conn.commit()
 
     def check_by_data(self):
         if(self.select_row is None):
             QMessageBox.about(self, "Notifications", "Please choose data row!")
         else :
-            hash_text=self.table_sql.item(self.select_row,1).text()
-            self.line_file_check_1.setText(self.table_sql.item(self.select_row,0).text())
+            hash_text=self.table_file_hash.item(self.select_row,1).text()
+            self.line_file_check_1.setText(self.table_file_hash.item(self.select_row,0).text())
             self.text_check_sha1_1.setText(hash_text[0:40])
             self.text_check_sha2_1.setText(hash_text[40:104])
             self.text_check_md5_1.setText(hash_text[104:])
             self.label_file_check.setText("<font color='red'>Check from data:</font>")
 
     def get_select_file(self):
-        self.select_row = self.table_sql.currentRow()
+        self.select_row = self.table_file_hash.currentRow()
         if self.select_row != -1:
-            self.filename_current_row = self.table_sql.item(self.select_row,0).text()       
+            self.filename_current_row = self.table_file_hash.item(self.select_row,0).text()
+
+    def management_form(self):
+        self.hide()
+        self.management_user.show()
+
+                   

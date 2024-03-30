@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>368</width>
-    <height>292</height>
+    <width>631</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,12 @@
      <widget class="QPushButton" name="btn_login">
       <property name="text">
        <string>Login</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -46,7 +52,14 @@
        <widget class="QLineEdit" name="line_user_name"/>
       </item>
       <item>
-       <widget class="QLineEdit" name="line_passwd"/>
+       <widget class="QLineEdit" name="line_passwd">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -57,7 +70,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>368</width>
+     <width>631</width>
      <height>26</height>
     </rect>
    </property>

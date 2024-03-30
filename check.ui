@@ -23,9 +23,9 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QPushButton" name="btn_register">
+            <widget class="QPushButton" name="btn_management">
              <property name="text">
-              <string>Register</string>
+              <string>Management</string>
              </property>
             </widget>
            </item>
@@ -172,7 +172,7 @@
     <item row="0" column="2">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_check">
        <attribute name="title">
@@ -349,7 +349,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="QTableWidget" name="table_sql"/>
+         <widget class="QTableWidget" name="table_file_hash"/>
         </item>
        </layout>
       </widget>
