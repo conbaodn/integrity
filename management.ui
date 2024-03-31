@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>538</height>
+    <width>373</width>
+    <height>554</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,20 +15,26 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item row="0" column="0" colspan="2">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_register">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>10000000</height>
+        </size>
+       </property>
        <attribute name="title">
         <string>Register</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_name">
-          <property name="text">
-           <string>User Name:</string>
+        <item row="5" column="0">
+         <widget class="QLineEdit" name="line_confirm_passwd">
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
           </property>
          </widget>
         </item>
@@ -46,9 +52,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="line_user_name"/>
-        </item>
         <item row="6" column="0">
          <widget class="QPushButton" name="btn_register">
           <property name="text">
@@ -56,10 +59,10 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QLineEdit" name="line_confirm_passwd">
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_name">
+          <property name="text">
+           <string>User Name:</string>
           </property>
          </widget>
         </item>
@@ -69,6 +72,9 @@
            <string>Password:</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="line_user_name"/>
         </item>
        </layout>
       </widget>
@@ -91,6 +97,20 @@
       </widget>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="btn_exit">
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="btn_logout">
+      <property name="text">
+       <string>Logout</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -98,7 +118,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>567</width>
+     <width>373</width>
      <height>26</height>
     </rect>
    </property>

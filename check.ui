@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>722</width>
-    <height>896</height>
+    <height>833</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -169,10 +169,69 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="0" colspan="3">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="btn_save">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_clear">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_show_data">
+        <property name="text">
+         <string>Show Database</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_delete">
+        <property name="text">
+         <string>Delete</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_load">
+        <property name="text">
+         <string>Load</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_check_data">
+        <property name="text">
+         <string>Check by data</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_logout">
+        <property name="text">
+         <string>Logout</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item row="0" column="2">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_check">
        <attribute name="title">
@@ -353,71 +412,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_user">
-       <attribute name="title">
-        <string>User</string>
-       </attribute>
-      </widget>
      </widget>
-    </item>
-    <item row="1" column="0" colspan="3">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="btn_save">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string>Save</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_clear">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string>Clear</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_show_data">
-        <property name="text">
-         <string>Show Database</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_delete">
-        <property name="text">
-         <string>Delete</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_load">
-        <property name="text">
-         <string>Load</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_check_data">
-        <property name="text">
-         <string>Check by data</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_logout">
-        <property name="text">
-         <string>Logout</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
    </layout>
   </widget>
@@ -442,12 +437,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
-     <x>355</x>
-     <y>177</y>
+     <x>340</x>
+     <y>345</y>
     </hint>
    </hints>
   </connection>
@@ -458,8 +453,8 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
      <x>318</x>
@@ -474,12 +469,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
-     <x>387</x>
-     <y>633</y>
+     <x>340</x>
+     <y>747</y>
     </hint>
    </hints>
   </connection>
@@ -490,12 +485,28 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
-     <x>364</x>
-     <y>101</y>
+     <x>341</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_logout</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>652</x>
+     <y>781</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>800</y>
     </hint>
    </hints>
   </connection>
@@ -506,44 +517,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
-     <x>900</x>
-     <y>235</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_clear</sender>
-   <signal>clicked()</signal>
-   <receiver>text_check_sha2_1</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1006</x>
-     <y>464</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_clear</sender>
-   <signal>clicked()</signal>
-   <receiver>text_check_md5_1</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1006</x>
-     <y>629</y>
+     <x>482</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
@@ -554,12 +533,28 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>678</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
-     <x>905</x>
-     <y>131</y>
+     <x>482</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>text_check_sha2_1</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>795</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>482</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
@@ -570,12 +565,28 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>259</x>
-     <y>666</y>
+     <x>204</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
-     <x>616</x>
-     <y>96</y>
+     <x>482</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>text_check_md5_1</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>795</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>482</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
