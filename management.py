@@ -18,6 +18,7 @@ class ManagementUser(QMainWindow):
         self.btn_delete.clicked.connect(self.delete_data)
         self.btn_exit.clicked.connect(self.exit_management)
         self.btn_logout.clicked.connect(self.logout_user)
+        self.btn_change_passwd.clicked.connect(self.change_passwd_admin)
 
         self.table_user.itemSelectionChanged.connect(self.get_select_file)
         self.table_user.setColumnCount(0)
@@ -72,6 +73,27 @@ class ManagementUser(QMainWindow):
             QMessageBox.about(self, "Notifications", "Please choose user")
         else:
             self.management_user.delete_data(self.filename_current_row)
+            self.show_data()
+
+    def change_passwd_admin(self):
+        admin = self.management_user.check_exist_user("admin")
+        if str(self.line_old_passwd.text()) != admin[1]:
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle("Warring!")
+            msgBox.setText("Password is incorrect")
+            msgBox.exec()
+        elif self.line_new_passwd.text() != self.line_confirm_new_passwd.text():
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle("Warring!")
+            msgBox.setText("The password confirmation does not match")
+            msgBox.exec()
+        else:
+            self.management_user.insert_data("admin", str(self.line_new_passwd.text()))
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle("Notification!")
+            msgBox.setText("Successfully!")
+            msgBox.addButton(QMessageBox.StandardButton.Ok)
+            msgBox.exec()
             self.show_data()
 
     def exit_management(self):
