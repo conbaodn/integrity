@@ -1,4 +1,5 @@
 from PyQt6 import QtWidgets, uic
+from PyQt6.QtWidgets import QAbstractScrollArea
 from PyQt6.QtWidgets import *
 import hashlib
 import data_file
@@ -11,6 +12,7 @@ class CheckIntegrity(QMainWindow):
     def __init__(self):
         super(CheckIntegrity, self).__init__()
         uic.loadUi("check.ui", self)
+        self.setWindowTitle("Check Integrity")
 
         self.data = data_file.HashData()
         self.management_user = management.ManagementUser()
@@ -114,7 +116,7 @@ class CheckIntegrity(QMainWindow):
     # Data
     def show_data(self):
         self.table_file_hash.setRowCount(0)
-        self.table_file_hash.setColumnCount(2)
+        self.table_file_hash.setColumnCount(4)
         self.data.show_data()
         for row_num, row_data in enumerate(self.data.data):
             self.table_file_hash.insertRow(row_num)
@@ -122,15 +124,18 @@ class CheckIntegrity(QMainWindow):
                 self.table_file_hash.setItem(
                     row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data))
                 )
+        self.table_file_hash.setSizeAdjustPolicy(
+            QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents
+        )
+        self.table_file_hash.resizeRowsToContents()
+        self.table_file_hash.horizontalHeader().setStretchLastSection(True)
 
     def process_load_data(self):
         self.data.insert_data(
             str(self.line_choose.text()),
-            str(
-                self.text_hash_sha1.toPlainText()
-                + self.text_hash_sha2.toPlainText()
-                + self.text_hash_md5.toPlainText()
-            ),
+            str(self.text_hash_sha1.toPlainText()),
+            str(self.text_hash_sha2.toPlainText()),
+            str(self.text_hash_md5.toPlainText()),
         )
         self.show_data()
 
@@ -145,13 +150,15 @@ class CheckIntegrity(QMainWindow):
         if self.select_row is None:
             QMessageBox.about(self, "Notifications", "Please choose data row!")
         else:
-            hash_text = self.table_file_hash.item(self.select_row, 1).text()
+            hash_text_sha1 = self.table_file_hash.item(self.select_row, 1).text()
+            hash_text_sha2 = self.table_file_hash.item(self.select_row, 2).text()
+            hash_text_md5 = self.table_file_hash.item(self.select_row, 3).text()
             self.line_file_check_1.setText(
                 self.table_file_hash.item(self.select_row, 0).text()
             )
-            self.text_check_sha1_1.setText(hash_text[0:40])
-            self.text_check_sha2_1.setText(hash_text[40:104])
-            self.text_check_md5_1.setText(hash_text[104:])
+            self.text_check_sha1_1.setText(hash_text_sha1)
+            self.text_check_sha2_1.setText(hash_text_sha2)
+            self.text_check_md5_1.setText(hash_text_md5)
             self.label_file_check.setText("<font color='red'>Check from data:</font>")
 
     def get_select_file(self):

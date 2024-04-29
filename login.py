@@ -9,7 +9,11 @@ class Login(QMainWindow):
         super(Login, self).__init__()
         uic.loadUi("login.ui", self)
         self.data_user = data_user.User()
+        self.setWindowTitle("Login")
         self.btn_login.clicked.connect(self.login_account)
+        self.btn_login.setAutoDefault(True)
+        self.line_user_name.returnPressed.connect(self.login_account)
+        self.line_passwd.returnPressed.connect(self.login_account)
 
     def login_account(self):
         user_name = self.line_user_name.text()

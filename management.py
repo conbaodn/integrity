@@ -9,6 +9,7 @@ class ManagementUser(QMainWindow):
     def __init__(self):
         super(ManagementUser, self).__init__()
         uic.loadUi("management.ui", self)
+        self.setWindowTitle("Management User")
 
         self.management_user = data_user.User()
         self.filename_current_row = None
@@ -22,6 +23,7 @@ class ManagementUser(QMainWindow):
 
         self.table_user.itemSelectionChanged.connect(self.get_select_file)
         self.table_user.setColumnCount(0)
+        self.table_user.resizeRowsToContents()
 
     def register_user(self):
         user_name = self.line_user_name.text()
@@ -67,6 +69,11 @@ class ManagementUser(QMainWindow):
                 self.table_user.setItem(
                     row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data))
                 )
+        self.table_user.setSizeAdjustPolicy(
+            QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents
+        )
+        self.table_user.resizeRowsToContents()
+        self.table_user.horizontalHeader().setStretchLastSection(True)
 
     def delete_data(self):
         if self.select_row is None:
@@ -81,8 +88,6 @@ class ManagementUser(QMainWindow):
             msgBox = QMessageBox()
             msgBox.setWindowTitle("Warring!")
             msgBox.setText("Password is incorrect")
-            msgBox.exec()
-        elif self.line_new_passwd.text() != self.line_confirm_new_passwd.text():
             msgBox = QMessageBox()
             msgBox.setWindowTitle("Warring!")
             msgBox.setText("The password confirmation does not match")
