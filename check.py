@@ -1,24 +1,32 @@
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QAbstractScrollArea
 from PyQt6.QtWidgets import *
+import os
 import hashlib
 import data_file
 import md5
 import login
 import management
+import data_passwd
+
+import pyzipper
 
 
-class CheckIntegrity(QMainWindow):
+class CheckIntegrity(QMainWindow, QDialog):
     def __init__(self):
         super(CheckIntegrity, self).__init__()
         uic.loadUi("check.ui", self)
         self.user = ""
+        self.filename = ""
         self.setWindowTitle("Check Integrity")
 
         self.data = data_file.HashData()
         self.data.owner = self.data
 
         self.management_user = management.ManagementUser()
+
+        self.passwd_file = data_passwd.PasswdFile()
+
         self.filename_current_row = None
         self.select_row = None
 
@@ -32,6 +40,8 @@ class CheckIntegrity(QMainWindow):
         self.btn_check_data.clicked.connect(self.check_by_data)
         self.btn_management.clicked.connect(self.management_form)
         self.btn_logout.clicked.connect(self.logout_user)
+        self.btn_lock_file.clicked.connect(self.create_zip_with_password)
+        self.btn_unlock_file.clicked.connect(self.open_zip_with_password)
 
         self.table_file_hash.itemSelectionChanged.connect(self.get_select_file)
         self.table_file_hash.setColumnCount(0)
@@ -176,6 +186,64 @@ class CheckIntegrity(QMainWindow):
             self.filename_current_row = self.table_file_hash.item(
                 self.select_row, 0
             ).text()
+
+    def create_zip_with_password(self):
+        if not self.filename:
+            QMessageBox.warning(self, "Error", "Please select a file first.")
+            return
+        else:
+            passwd = self.data.get_passwd(self.filename)[0]
+            output_zip_path, _ = QFileDialog.getSaveFileName(
+                self, "Save Zip File As", "", "Zip Files (*.zip)"
+            )
+        if not output_zip_path:
+            return
+
+        try:
+            with pyzipper.AESZipFile(
+                output_zip_path,
+                "w",
+                compression=pyzipper.ZIP_DEFLATED,
+                encryption=pyzipper.WZ_AES,
+            ) as zf:
+                zf.setpassword(passwd.encode())
+                zf.write(self.filename, os.path.basename(self.filename))
+                self.passwd_file.insert_data(output_zip_path, passwd, self.user)
+
+            QMessageBox.information(
+                self, "Success", f"File encrypted and saved as: {output_zip_path}"
+            )
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
+
+    def open_zip_with_password(self):
+        filename = self.open_file()[0]
+        if not filename:
+            QMessageBox.warning(self, "Error", "Please select a file first.")
+            return
+        passwd = self.passwd_file.get_passwd(filename)[0]
+
+        if not passwd:
+            QMessageBox.warning(
+                self, "Error", "You do not have permission to access this file"
+            )
+            return
+
+        try:
+            with pyzipper.AESZipFile(self.filename) as zf:
+                zf.setpassword(passwd.encode())
+                self.extracted_path = QFileDialog.getExistingDirectory(
+                    self, "Select Directory to Extract Files"
+                )
+                if self.extracted_path:
+                    zf.extractall(path=self.extracted_path)
+                    QMessageBox.information(
+                        self, "Success", "Files extracted successfully."
+                    )
+        except pyzipper.BadPassword:
+            QMessageBox.warning(self, "Error", "Incorrect password. Please try again.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
 
     def management_form(self):
         self.hide()

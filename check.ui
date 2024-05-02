@@ -232,6 +232,20 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btn_lock_file">
+        <property name="text">
+         <string>Lock file</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_unlock_file">
+        <property name="text">
+         <string>Unlock file</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item row="0" column="2">

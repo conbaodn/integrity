@@ -36,7 +36,10 @@ class HashData:
     def insert_data(
         self, file_name, hash_code_sha1, hash_code_sha2, hash_code_md5, owner
     ):
-        load_table = """INSERT INTO table_hash(File, SHA1, SHA2, MD5, Owner) VALUES(?,?,?,?,?) ON CONFLICT(File) DO UPDATE SET SHA1=?, SHA2=?, MD5=?
+        load_table = """INSERT INTO table_hash(File, SHA1, SHA2, MD5, Owner) 
+        VALUES(?,?,?,?,?) 
+        ON CONFLICT(File) 
+        DO UPDATE SET SHA1=?, SHA2=?, MD5=?
         """
         self.cur.execute(
             load_table,
@@ -52,7 +55,23 @@ class HashData:
             ),
         )
 
-    def delete_data(self, File):
+    def delete_data(self, file):
         delete_table = "DELETE FROM table_hash WHERE File=?"
-        self.cur.execute(delete_table, (File,))
+        self.cur.execute(delete_table, (file,))
         self.conn.commit()
+
+    def exist_file(self, filename, owner):
+        return self.cur.execute(
+            """ SELECT File FROM table_hash WHERE File=? AND Owner=?""",
+            (filename, owner),
+        )
+
+    def get_passwd(self, file):
+        self.cur.execute(
+            """SELECT user.Password  
+                FROM table_hash
+                JOIN user ON user.user=table_hash.Owner 
+                WHERE table_hash.File = ?""",
+            (file,),
+        )
+        return self.cur.fetchone()
