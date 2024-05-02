@@ -12,9 +12,12 @@ class CheckIntegrity(QMainWindow):
     def __init__(self):
         super(CheckIntegrity, self).__init__()
         uic.loadUi("check.ui", self)
+        self.user = ""
         self.setWindowTitle("Check Integrity")
 
         self.data = data_file.HashData()
+        self.data.owner = self.data
+
         self.management_user = management.ManagementUser()
         self.filename_current_row = None
         self.select_row = None
@@ -115,9 +118,14 @@ class CheckIntegrity(QMainWindow):
 
     # Data
     def show_data(self):
-        self.table_file_hash.setRowCount(0)
-        self.table_file_hash.setColumnCount(4)
-        self.data.show_data()
+        if self.user == "admin":
+            self.table_file_hash.setRowCount(0)
+            self.table_file_hash.setColumnCount(5)
+            self.data.show_data()
+        else:
+            self.table_file_hash.setRowCount(0)
+            self.table_file_hash.setColumnCount(4)
+            self.data.show_data()
         for row_num, row_data in enumerate(self.data.data):
             self.table_file_hash.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
@@ -136,6 +144,7 @@ class CheckIntegrity(QMainWindow):
             str(self.text_hash_sha1.toPlainText()),
             str(self.text_hash_sha2.toPlainText()),
             str(self.text_hash_md5.toPlainText()),
+            self.user,
         )
         self.show_data()
 

@@ -29,10 +29,14 @@ class Login(QMainWindow):
         elif check_exist[0] != "admin":
             self.hide()
             self.check_ui = check.CheckIntegrity()
+            self.check_ui.user = user_name
+            self.check_ui.data.owner = user_name
             self.check_ui.btn_management.hide()
             self.check_ui.show()
 
         else:
             self.hide()
             self.check_ui = check.CheckIntegrity()
+            self.check_ui.user = user_name
+            self.check_ui.data.owner = user_name
             self.check_ui.show()

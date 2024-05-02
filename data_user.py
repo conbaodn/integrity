@@ -3,7 +3,7 @@ import sqlite3
 
 class User:
     def __init__(self):
-        self.conn = sqlite3.connect("user.db")
+        self.conn = sqlite3.connect("data.db")
         self.cur = self.conn.cursor()
 
         self.cur.execute(
@@ -12,6 +12,7 @@ class User:
 			"Password"	TEXT)
 			"""
         )
+        self.conn.commit()
 
     def show_data(self):
         self.data_file = self.conn.execute("""select * from user""")

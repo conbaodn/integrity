@@ -11,6 +11,28 @@ class ManagementUser(QMainWindow):
         uic.loadUi("management.ui", self)
         self.setWindowTitle("Management User")
 
+        self.setTabOrder(self.line_user_name, self.line_passwd)
+        self.setTabOrder(self.line_passwd, self.line_confirm_passwd)
+        self.setTabOrder(self.line_confirm_passwd, self.btn_register)
+        self.setTabOrder(self.btn_register, self.btn_exit)
+        self.setTabOrder(self.btn_exit, self.btn_logout)
+
+        self.setTabOrder(self.line_old_passwd, self.line_new_passwd)
+        self.setTabOrder(self.line_new_passwd, self.line_confirm_new_passwd)
+        self.setTabOrder(self.line_confirm_new_passwd, self.btn_change_passwd)
+        self.setTabOrder(self.btn_change_passwd, self.btn_exit)
+        self.setTabOrder(self.btn_exit, self.btn_logout)
+
+        self.line_user_name.returnPressed.connect(self.register_user)
+        self.line_passwd.returnPressed.connect(self.register_user)
+        self.line_confirm_passwd.returnPressed.connect(self.register_user)
+        self.btn_register.setAutoDefault(True)
+
+        self.line_old_passwd.returnPressed.connect(self.change_passwd_admin)
+        self.line_new_passwd.returnPressed.connect(self.change_passwd_admin)
+        self.line_confirm_new_passwd.returnPressed.connect(self.change_passwd_admin)
+        self.btn_change_passwd.setAutoDefault(True)
+
         self.management_user = data_user.User()
         self.filename_current_row = None
         self.select_row = None
@@ -78,6 +100,8 @@ class ManagementUser(QMainWindow):
     def delete_data(self):
         if self.select_row is None:
             QMessageBox.about(self, "Notifications", "Please choose user")
+        elif self.filename_current_row == "admin":
+            QMessageBox.about(self, "Notifications", "User admin cannot delete")
         else:
             self.management_user.delete_data(self.filename_current_row)
             self.show_data()
