@@ -5,7 +5,6 @@ class HashData:
     def __init__(self):
         self.conn = sqlite3.connect("data.db")
         self.cur = self.conn.cursor()
-        self.owner = ""
 
         self.cur.execute(
             """CREATE TABLE if not exists "table_hash" (
@@ -20,16 +19,16 @@ class HashData:
         )
         self.conn.commit()
 
-    def show_data(self):
-        if self.owner == "admin":
+    def show_data(self, user):
+        if user == "admin":
             self.data = self.conn.execute(
                 """select * from table_hash ORDER BY CASE WHEN Owner = 'admin' THEN 0 ELSE 1 END, Owner"""
             )
             self.conn.commit()
         else:
             self.data = self.conn.execute(
-                """select * from table_hash WHERE Owner=? ORDER BY CASE WHEN Owner = 'admin' THEN 0 ELSE 1 END, Owner""",
-                (self.owner,),
+                """select * from table_hash WHERE Owner=? ORDER BY CASE WHEN Owner = "admin" THEN 0 ELSE 1 END, Owner""",
+                (user,),
             )
             self.conn.commit()
 
@@ -54,6 +53,7 @@ class HashData:
                 hash_code_md5,
             ),
         )
+        self.conn.commit()
 
     def delete_data(self, file):
         delete_table = "DELETE FROM table_hash WHERE File=?"
@@ -66,12 +66,24 @@ class HashData:
             (filename, owner),
         )
 
-    def get_passwd(self, file):
-        self.cur.execute(
-            """SELECT user.Password  
-                FROM table_hash
-                JOIN user ON user.user=table_hash.Owner 
-                WHERE table_hash.File = ?""",
-            (file,),
-        )
-        return self.cur.fetchone()
+    def get_passwd(self, file, user):
+        if user == "admin":
+            self.cur.execute(
+                """SELECT user.Password  
+                    FROM table_hash
+                    JOIN user ON user.user=table_hash.Owner 
+                    WHERE table_hash.File = ?""",
+                (file,),
+            )
+            return self.cur.fetchone()
+        else:
+            self.cur.execute(
+                """SELECT user.Password  
+                    FROM table_hash
+                    JOIN user ON user.User=table_hash.Owner 
+                    WHERE table_hash.File = ? AND user.user=?""",
+                (
+                    file,
+                    user,
+                ),
+            )

@@ -131,11 +131,11 @@ class CheckIntegrity(QMainWindow, QDialog):
         if self.user == "admin":
             self.table_file_hash.setRowCount(0)
             self.table_file_hash.setColumnCount(5)
-            self.data.show_data()
+            self.data.show_data(self.user)
         else:
             self.table_file_hash.setRowCount(0)
             self.table_file_hash.setColumnCount(4)
-            self.data.show_data()
+            self.data.show_data(self.user)
         for row_num, row_data in enumerate(self.data.data):
             self.table_file_hash.insertRow(row_num)
             for col_num, col_data in enumerate(row_data):
@@ -188,11 +188,15 @@ class CheckIntegrity(QMainWindow, QDialog):
             ).text()
 
     def create_zip_with_password(self):
-        if not self.filename:
+        if self.line_choose.text() == "":
             QMessageBox.warning(self, "Error", "Please select a file first.")
             return
         else:
-            passwd = self.data.get_passwd(self.filename)[0]
+            self.process_load_data()
+            passwd = self.passwd_file.get_passwd(self.filename, self.user)[0]
+            if not passwd:
+                QMessageBox.warning(self, "Error", "Please load file first")
+                return
             output_zip_path, _ = QFileDialog.getSaveFileName(
                 self, "Save Zip File As", "", "Zip Files (*.zip)"
             )
@@ -221,14 +225,14 @@ class CheckIntegrity(QMainWindow, QDialog):
         if not filename:
             QMessageBox.warning(self, "Error", "Please select a file first.")
             return
-        passwd = self.passwd_file.get_passwd(filename)[0]
-
-        if not passwd:
+        if self.user == "admin":
+            passwd = self.passwd_file.get_passwd(filename, self.user)[0]
+        elif not self.passwd_file.get_passwd(filename, self.user):
             QMessageBox.warning(
                 self, "Error", "You do not have permission to access this file"
             )
             return
-
+        passwd = self.passwd_file.get_passwd(filename, self.user)[0]
         try:
             with pyzipper.AESZipFile(self.filename) as zf:
                 zf.setpassword(passwd.encode())

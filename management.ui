@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
-    <height>558</height>
+    <width>333</width>
+    <height>557</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -103,97 +103,57 @@
        <attribute name="title">
         <string>Change Password Admin</string>
        </attribute>
-       <widget class="QLabel" name="label_10">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>276</y>
-          <width>331</width>
-          <height>101</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Confirm Password:</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btn_change_passwd">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>409</y>
-          <width>331</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Change Password</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_pwd_4">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>143</y>
-          <width>331</width>
-          <height>101</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>New Password:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="line_old_passwd">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>117</y>
-          <width>331</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_name_4">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>331</width>
-          <height>101</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Password:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="line_confirm_new_passwd">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>383</y>
-          <width>331</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="line_new_passwd">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>250</y>
-          <width>331</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_name_4">
+          <property name="text">
+           <string>Password:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="line_old_passwd">
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_pwd_4">
+          <property name="text">
+           <string>New Password:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="line_new_passwd">
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Confirm Password:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLineEdit" name="line_confirm_new_passwd">
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QPushButton" name="btn_change_passwd">
+          <property name="text">
+           <string>Change Password</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -218,7 +178,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>329</width>
+     <width>333</width>
      <height>21</height>
     </rect>
    </property>

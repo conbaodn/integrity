@@ -18,23 +18,34 @@ class PasswdFile:
 
     def insert_data(self, file_name, passwd, owner):
         load_table = """INSERT INTO passwd_file(File, Password, Owner) 
-        VALUES(?,?,?) 
+        VALUES(?,?,?)
+        ON CONFLICT(File)
+        DO UPDATE SET Password=?, Owner=? 
         """
         self.cur.execute(
             load_table,
-            (
-                file_name,
-                passwd,
-                owner,
-            ),
+            (file_name, passwd, owner, passwd, owner),
         )
         self.conn.commit()
 
-    def get_passwd(self, file_name):
-        self.cur.execute(
-            """SELECT Password  
+    def get_passwd(self, file_name, user):
+        if user == "admin":
+            self.cur.execute(
+                """SELECT Password
                 FROM passwd_file 
                 WHERE File = ?""",
-            (file_name,),
-        )
-        return self.cur.fetchone()
+                (file_name,),
+            )
+            return self.cur.fetchone()
+        else:
+            self.cur.execute(
+                """SELECT user.Password
+                FROM table_hash
+                JOIN user ON user.User = table_hash.Owner
+                WHERE table_hash.File = ? AND user.User = ?""",
+                (
+                    file_name,
+                    user,
+                ),
+            )
+            return self.cur.fetchone()
