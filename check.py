@@ -193,10 +193,7 @@ class CheckIntegrity(QMainWindow, QDialog):
             return
         else:
             self.process_load_data()
-            passwd = self.passwd_file.get_passwd(self.filename, self.user)[0]
-            if not passwd:
-                QMessageBox.warning(self, "Error", "Please load file first")
-                return
+            passwd = self.data.get_passwd(self.filename, self.user)[0]
             output_zip_path, _ = QFileDialog.getSaveFileName(
                 self, "Save Zip File As", "", "Zip Files (*.zip)"
             )

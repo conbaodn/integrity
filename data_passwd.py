@@ -39,10 +39,9 @@ class PasswdFile:
             return self.cur.fetchone()
         else:
             self.cur.execute(
-                """SELECT user.Password
-                FROM table_hash
-                JOIN user ON user.User = table_hash.Owner
-                WHERE table_hash.File = ? AND user.User = ?""",
+                """SELECT Password
+                FROM passwd_file 
+                WHERE File = ? AND Owner=?""",
                 (
                     file_name,
                     user,

@@ -112,6 +112,7 @@ class ManagementUser(QMainWindow):
             msgBox = QMessageBox()
             msgBox.setWindowTitle("Warring!")
             msgBox.setText("Password is incorrect")
+        elif self.line_new_passwd.text() != self.line_confirm_new_passwd.text():
             msgBox = QMessageBox()
             msgBox.setWindowTitle("Warring!")
             msgBox.setText("The password confirmation does not match")

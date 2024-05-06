@@ -87,3 +87,4 @@ class HashData:
                     user,
                 ),
             )
+            return self.cur.fetchone()
